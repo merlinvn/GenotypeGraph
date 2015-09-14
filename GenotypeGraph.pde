@@ -1,6 +1,6 @@
 // Modified Code from Visualizing Data, First Edition, Ben Fry.
 // Based on the GraphLayout example by Sun Microsystems.
-
+import de.bezier.guido.*;
 
 int nodeCount;
 Node[] nodes = new Node[100];
@@ -23,6 +23,9 @@ void settings() {
 
 void setup() {
 
+    Interactive.make( this ); // start GUIDO
+
+    MyButton mb = new MyButton( 20, 20, 50, 50 ); 
 
   loadData();
   println(edgeCount);
@@ -168,4 +171,32 @@ void mouseDragged() {
 
 void mouseReleased() {
   selection = null;
+}
+
+public class MyButton
+{
+    float x,y,width,height;
+    boolean on;
+
+    MyButton ( float xx, float yy, float ww, float hh ) 
+    {
+        x = xx; y = yy; width = ww; height = hh;
+
+        Interactive.add( this ); // add this to GUIDO manager, important!
+    }
+
+    void mousePressed ()
+    {
+        // called when the button has been pressed
+
+        on = !on;
+    }
+
+    void draw ()
+    {
+        // called by GUIDO after PApplet.draw() has finished
+
+        fill( on ? 80 : 140 );
+        rect( x, y, width, height );
+    }
 }
